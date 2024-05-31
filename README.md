@@ -90,13 +90,16 @@ doctl serverless namespaces create --label="kieran-namespace" --region="ams3"
 
 ### 3.1. Useful commands
 
-| Command       | Description                                                                            |
-|---------------|----------------------------------------------------------------------------------------|
-| `make`        | Deploys the functions to the remote namespace. Intended for development purposes only. |
-| `make deploy` | Deploys the functions to the remote namespace.                                         |
-| `make list`   | Lists the deployed functions in the configured namespace.                              |
-| `make logs`   | Outputs the activation logs for the deployed functions.                                |
-| `make watch`  | Watches for code changes and redeploys functions to namespace.                         |
+| Command       | Description                                                                                                        |
+|---------------|--------------------------------------------------------------------------------------------------------------------|
+| `make`        | Creates the `.env` file and deploys the functions to the remote namespace. Intended for development purposes only. |
+| `make clean`  | Removes build files and configurations.                                                                            |
+| `make deploy` | Deploys the functions to the remote namespace. Intended for development purposes only.                             |
+| `make list`   | Lists the deployed functions in the configured namespace.                                                          |
+| `make logs`   | Outputs the activation logs for the deployed functions.                                                            |
+| `make setup`  | Creates the `.env` file from an `.env.example` file.                                                               |
+| `make test`   | Runs the tests for each function.                                                                                  |
+| `make watch`  | Watches for code changes and redeploys functions to namespace.                                                     |
 
 <sup>[Back to top ^][table-of-contents]</sup>
 
