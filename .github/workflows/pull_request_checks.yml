@@ -1,0 +1,14 @@
+name: "Pull Request Checks"
+
+on:
+  pull_request:
+
+jobs:
+  test:
+    name: "Test"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "🛎 Checkout"
+        uses: actions/checkout@v4
+      - name: "🧪 Test"
+        run: make test
