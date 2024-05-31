@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="3D pixelated Kibisis icon with an exclamation mark" src="assets/icon@128x128.png" style="padding-top: 15px" height="128" />
+  <img alt="3D pixelated Kibisis icon" src="assets/icon@128x128.png" style="padding-top: 15px" height="128" />
 </p>
 
 <h1 align="center">
@@ -20,6 +20,15 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/agoralabs-sh/kibisis-api/releases">
+    <img alt="GitHub Pre-release" src="https://img.shields.io/github/v/release/agoralabs-sh/kibisis-api?include_prereleases&label=pre-release&logo=github">
+  </a>
+  <a href="https://github.com/agoralabs-sh/kibisis-api/releases">
+    <img alt="GitHub Pre-release Date - Published At" src="https://img.shields.io/github/release-date-pre/agoralabs-sh/kibisis-api?label=pre-release date&logo=github">
+  </a>
+</p>
+
+<p align="center">
   <a href="https://github.com/agoralabs-sh/kibisis-api/blob/main/COPYING">
     <img alt="GitHub license" src="https://img.shields.io/github/license/agoralabs-sh/kibisis-api">
   </a>
@@ -33,6 +42,8 @@
   - [2.1. Requirements](#21-requirements)
   - [2.2. Setup `doctl`](#22-setup-doctl)
   - [2.3. Create a personal namespace (optional)](#23-create-a-personal-namespace-optional)
+  - [2.4. Setting up environment variables](#24-setting-up-environment-variables)
+  - [Deploy the functions to the namespace](#25-deploy-the-functions-to-the-namespace)
 * [3. Appendix](#-3-appendix)
   - [3.1. Useful commands](#31-useful-commands)
 * [4. How To Contribute](#-4-how-to-contribute)
@@ -42,7 +53,7 @@
 
 ### 1.1. Project structure
 
-The project structure is based onthe [DigitalOcean functions][https://docs.digitalocean.com/products/functions/how-to/structure-projects/] project structure.
+The project structure is based on the [DigitalOcean functions][https://docs.digitalocean.com/products/functions/how-to/structure-projects/] project structure.
 However, the core directories `lib` and `packages` have specific functionality:
 
 * `packages` - This is where each function resides. Each package/function relates to the API path. For example, `achievements/quest` will correspond to an API path `https://<endpoint>/achievements/quests`
@@ -83,6 +94,39 @@ doctl serverless namespaces create --label="kieran-namespace" --region="ams3"
 ```
 
 > ⚠️ **NOTE:** The above example shows setting up a namespace in the Amsterdam region, but it is better if you use a region that is closest to you. Run the command: `doctl serverless namespaces list-regions` to get a list of regions and replace the `--region` value with the desired region form the list.
+
+<sup>[Back to top ^][table-of-contents]</sup>
+
+### 2.4. Setting up environment variables
+
+1. Create a `.env` file from the `.env.example`:
+```shell script
+make setup
+```
+
+2. Edit the values in the `.env` file.
+
+<sup>[Back to top ^][table-of-contents]</sup>
+
+### 2.5. Deploy the functions to the namespace
+
+1. Deploy the function to the namespace that was created in the [previous](#23-create-a-personal-namespace-optional) step:
+```shell
+make deploy
+```
+
+2. Get the URL of the deployed function:
+```shell
+doctl serverless functions get <package>/<function> --url
+```
+
+This will return a URL in the form of:
+
+```text
+https://faas-ams3-2a2df116.doserverless.co/api/v1/web/<namespace>/<package>/<function>
+```
+
+Use this URL to interact with the API.
 
 <sup>[Back to top ^][table-of-contents]</sup>
 
