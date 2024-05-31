@@ -4,7 +4,9 @@ SCRIPT_DIR=$(dirname "${0}")
 
 source "${SCRIPT_DIR}"/set_vars.sh
 
-# Public: Updates the VERSION file with the supplied version.
+# Public: Updates the ./packages/system/versions/VERSION file with the supplied version.
+#
+# $1 - the version to update
 #
 # Examples
 
@@ -26,10 +28,10 @@ function main() {
   fi
 
   # remove the previous contents
-  true > VERSION
+  true > "${PWD}"/packages/system/versions/VERSION
 
   # use the new version
-  echo "$1" >> VERSION
+  echo "$1" >> "${PWD}"/packages/system/versions/VERSION
 
   printf "%b new version set to: %b\n" "${INFO_PREFIX}" "$1"
 
@@ -37,4 +39,4 @@ function main() {
 }
 
 # and so, it begins...
-main "$1"
+main "$@"

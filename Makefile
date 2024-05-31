@@ -1,6 +1,6 @@
 scripts_dir := ./scripts
 
-.PHONY: deploy
+all: setup deploy
 
 deploy:
 	doctl serverless deploy "${PWD}"
@@ -11,5 +11,8 @@ list:
 logs:
 	doctl serverless activations logs --follow
 
-watch:
+setup:
+	$(scripts_dir)/setup.sh
+
+watch: deploy
 	doctl serverless watch "${PWD}"
