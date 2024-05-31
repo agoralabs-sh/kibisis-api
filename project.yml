@@ -1,0 +1,10 @@
+packages:
+    - name: achievements
+      shared: false
+      functions:
+        - name: quests
+          binary: true
+          main: "main"
+          runtime: go:1.20
+          web: true
+          webSecure: false
