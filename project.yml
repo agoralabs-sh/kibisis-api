@@ -1,10 +1,10 @@
 environment:
   ENVIRONMENT: "${ENVIRONMENT}"
 packages:
-    - name: achievements
+    - name: quests
       shared: false
       functions:
-        - name: quests
+        - name: daily
           binary: true
           main: "main"
           runtime: go:1.20
