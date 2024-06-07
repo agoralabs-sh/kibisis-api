@@ -8,7 +8,6 @@ import (
 	"lib/queries"
 	"lib/utils"
 	"net/http"
-	"os"
 	_queries "quests/internal/queries"
 	_types "quests/internal/types"
 )
@@ -16,21 +15,7 @@ import (
 func Main(request _types.Request) *_types.Response {
 	var dailyQuests []_types.DailyQuest
 
-	logLevel := utils.LogLevelError
-
-	switch os.Getenv("ENVIRONMENT") {
-	case "development":
-		logLevel = utils.LogLevelDebug
-		break
-	case "test":
-		logLevel = utils.LogLevelSilent
-		break
-	default:
-		logLevel = utils.LogLevelError
-		break
-	}
-
-	logger := utils.NewLogger(logLevel)
+	logger := utils.NewLogger()
 
 	// only accept get requests
 	if request.Http.Method != http.MethodGet {
@@ -38,6 +23,8 @@ func Main(request _types.Request) *_types.Response {
 			StatusCode: http.StatusMethodNotAllowed,
 		}
 	}
+
+	logger.Debug(fmt.Sprintf("validating account \"%s\"", request.Account))
 
 	_, err := algosdktypes.DecodeAddress(request.Account)
 	if err != nil {

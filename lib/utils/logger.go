@@ -3,6 +3,7 @@ package utils
 import (
 	"github.com/fatih/color"
 	"log"
+	"os"
 	"runtime"
 )
 
@@ -20,7 +21,32 @@ type Logger struct {
 	Level LogLevel
 }
 
-func NewLogger(level LogLevel) *Logger {
+// NewLogger Creates a new logger using the "ENVIRONMENT" env var. It defaults to error level logs.
+//
+//	"development" = debug level - all types of logs are printed
+//	"test" = silent level - no logs are printed
+func NewLogger() *Logger {
+	logLevel := LogLevelError
+
+	switch os.Getenv("ENVIRONMENT") {
+	case "development":
+		logLevel = LogLevelDebug
+		break
+	case "test":
+		logLevel = LogLevelSilent
+		break
+	default:
+		logLevel = LogLevelError
+		break
+	}
+
+	return &Logger{
+		Level: logLevel,
+	}
+}
+
+// NewLoggerWithLevel Creates a new logger with a specific level.
+func NewLoggerWithLevel(level LogLevel) *Logger {
 	return &Logger{
 		Level: level,
 	}
