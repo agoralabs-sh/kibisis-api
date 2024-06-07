@@ -7,13 +7,16 @@ import (
 )
 
 func TestMainWithSuccessfulResponse(t *testing.T) {
+	// arrange
 	err := os.Setenv("ENVIRONMENT", "development")
 	if err != nil {
 		t.Errorf("failed to set \"environment\" variable")
 	}
 
+	// act
 	response := Main()
 
+	// assert
 	if response.Body.Environment != "development" {
 		t.Errorf("expected \"environment\" to be \"development\", got %s", response.Body.Environment)
 	}

@@ -1,15 +1,21 @@
 environment:
   ENVIRONMENT: "${ENVIRONMENT}"
 packages:
-    - name: achievements
+    - name: quests
       shared: false
       functions:
-        - name: quests
+        - name: daily
           binary: true
           main: "main"
           runtime: go:1.20
           web: true
           webSecure: false
+          environment:
+            POSTHOG_API_URL: "${POSTHOG_API_URL}"
+            POSTHOG_API_KEY: "${POSTHOG_API_KEY}"
+            POSTHOG_PROJECT_ID: "${POSTHOG_PROJECT_ID}"
+          limits:
+            timeout: 30000 # 30 seconds in milliseconds
 
     - name: system
       shared: false
