@@ -2,7 +2,10 @@ module quests
 
 go 1.20
 
-require lib v0.0.0
+require (
+	golang.org/x/exp v0.0.0-20240604190554-fc45aab8b7f8
+	lib v0.0.0
+)
 
 require (
 	github.com/fatih/color v1.17.0 // indirect

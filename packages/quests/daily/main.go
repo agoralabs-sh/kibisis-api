@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"golang.org/x/exp/slices"
 	"lib/errors"
 	"lib/queries"
 	"lib/utils"
@@ -8,7 +10,6 @@ import (
 	"os"
 	internalqueries "quests/internal/queries"
 	internaltypes "quests/internal/types"
-	"slices"
 )
 
 func Main(request internaltypes.Request) *internaltypes.Response {
@@ -29,6 +30,8 @@ func Main(request internaltypes.Request) *internaltypes.Response {
 	//	}
 	//}
 
+	logger.Debug("getting event references from posthog")
+
 	eventReferences, err := queries.FetchEventReferences(logger)
 	if err != nil {
 		return &internaltypes.Response{
@@ -39,6 +42,10 @@ func Main(request internaltypes.Request) *internaltypes.Response {
 		}
 	}
 
+	logger.Debug(fmt.Sprintf("received the event references %s", eventReferences))
+
+	logger.Debug(fmt.Sprintf("getting daily events from posthog for account \"%s\"", request.Account))
+
 	dailyEvents, err := internalqueries.FetchDailyEvents(request.Account, logger)
 	if err != nil {
 		return &internaltypes.Response{
@@ -48,6 +55,8 @@ func Main(request internaltypes.Request) *internaltypes.Response {
 			StatusCode: http.StatusInternalServerError,
 		}
 	}
+
+	logger.Debug(fmt.Sprintf("received daily events from posthog for account \"%s\"", request.Account))
 
 	// map the daily quests from teh events, defaulting to zero for quests that are not in the daily events from posthog
 	for _, eventReference := range eventReferences {
