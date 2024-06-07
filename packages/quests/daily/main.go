@@ -1,10 +1,77 @@
 package main
 
 import (
-  internaltypes "quests/internal/types"
+	"lib/errors"
+	"lib/queries"
+	"lib/utils"
+	"net/http"
+	"os"
+	internalqueries "quests/internal/queries"
+	internaltypes "quests/internal/types"
+	"slices"
 )
 
-func Main(request internaltypes.Request) string {
+func Main(request internaltypes.Request) *internaltypes.Response {
+	var dailyQuests []internaltypes.DailyQuest
 
-	return "Hello " + request.Account
+	logLevel := utils.LogLevelError
+
+	if os.Getenv("ENVIRONMENT") == "development" {
+		logLevel = utils.LogLevelDebug
+	}
+
+	logger := utils.NewLogger(logLevel)
+
+	// only accept get requests
+	//if request.Http.Method != http.MethodGet {
+	//	return &internaltypes.Response{
+	//		StatusCode: http.StatusMethodNotAllowed,
+	//	}
+	//}
+
+	eventReferences, err := queries.FetchEventReferences(logger)
+	if err != nil {
+		return &internaltypes.Response{
+			Body: internaltypes.ResponseBody{
+				Error: errors.NewPostHogError("failed to fetch event references from posthog", err),
+			},
+			StatusCode: http.StatusInternalServerError,
+		}
+	}
+
+	dailyEvents, err := internalqueries.FetchDailyEvents(request.Account, logger)
+	if err != nil {
+		return &internaltypes.Response{
+			Body: internaltypes.ResponseBody{
+				Error: errors.NewPostHogError("failed to fetch daily events from posthog", err),
+			},
+			StatusCode: http.StatusInternalServerError,
+		}
+	}
+
+	// map the daily quests from teh events, defaulting to zero for quests that are not in the daily events from posthog
+	for _, eventReference := range eventReferences {
+		completed := 0
+		index := slices.IndexFunc(dailyEvents, func(event internaltypes.DailyEvent) bool {
+			return event.Name == eventReference
+		})
+
+		// if the event reference is in the daily events, get the amount
+		if index > -1 {
+			completed = dailyEvents[index].Amount
+		}
+
+		dailyQuests = append(dailyQuests, internaltypes.DailyQuest{
+			Id:        eventReference,
+			Completed: completed,
+		})
+	}
+
+	return &internaltypes.Response{
+		Body: internaltypes.ResponseBody{
+			Account: request.Account,
+			Quests:  dailyQuests,
+		},
+		StatusCode: http.StatusOK,
+	}
 }
