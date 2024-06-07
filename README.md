@@ -40,10 +40,11 @@
   - [1.1. Project structure](#11-project-structure)
 * [2. Development](#-2-development)
   - [2.1. Requirements](#21-requirements)
-  - [2.2. Setup `doctl`](#22-setup-doctl)
-  - [2.3. Create a personal namespace (optional)](#23-create-a-personal-namespace-optional)
-  - [2.4. Setting up environment variables](#24-setting-up-environment-variables)
-  - [Deploy the functions to the namespace](#25-deploy-the-functions-to-the-namespace)
+  - [2.2. Create personal Doppler config](#22-create-personal-doppler-config)
+  - [2.3. Setup `doppler`](#23-setup-doppler)
+  - [2.4. Setup `doctl`](#24-setup-doctl)
+  - [2.5. Create a personal namespace (optional)](#25-create-a-personal-namespace-optional)
+  - [2.6. Deploy the functions to the namespace](#26-deploy-the-functions-to-the-namespace)
 * [3. Appendix](#-3-appendix)
   - [3.1. Useful commands](#31-useful-commands)
 * [4. How To Contribute](#-4-how-to-contribute)
@@ -67,13 +68,36 @@ However, the core directories `lib` and `packages` have specific functionality:
 
 ### 2.1. Requirements
 
-* [`doctl`][doctl]
+* [DigitalOcean CLI][doctl]
+* [Doppler CLI][doppler]
 * [Golang v1.20+][golang]
 * [Make][make]
 
 <sup>[Back to top ^][table-of-contents]</sup>
 
-### 2.2. Setup `doctl`
+## 2.2. Create personal Doppler config
+
+To start using your own Doppler config, go to the project on [Doppler](https://dashboard.doppler.com/workplace/ae8c01548486ba93b8fd/projects/kibisis-api) and press the "+" to create a new personal branch config in the "Development" config
+
+<p align="center">
+  <img alt="Screen grab of the Doppler dashboard when creating a branch config" src="assets/create_doppler_config.png" style="padding-top: 15px" height="512" />
+</p>
+
+> ⚠️ **NOTE:** Use your name in lowercase with hyphens instead of spaces (kebab-case).
+
+<sup>[Back to top ^][table-of-contents]</sup>
+
+### 2.3. Setup `doppler`
+
+Once the branch project config has been setup, follow the instructions [here](https://docs.doppler.com/docs/install-cli#project-setup) to:
+* login to Doppler, and;
+* setup Doppler to use the kibisis-api project with your personal config.
+
+> ⚠️ **NOTE:** When naming your token, it is recommended you use: "<name>-<device_name>".
+
+<sup>[Back to top ^][table-of-contents]</sup>
+
+### 2.4. Setup `doctl`
 
 The DigitalOcean CLI client, `doctl`, is used to deploy the function to a remote environment tha can be used to develop.
 
@@ -83,7 +107,7 @@ Follow the instructions outlined in the [documentation][doctl].
 
 <sup>[Back to top ^][table-of-contents]</sup>
 
-### 2.3. Create a personal namespace (optional)
+### 2.5. Create a personal namespace (optional)
 
 > ⚠️ **NOTE:** If you have a personal namespace already setup, you can skip this step.
 
@@ -97,18 +121,7 @@ doctl serverless namespaces create --label="kieran-namespace" --region="ams3"
 
 <sup>[Back to top ^][table-of-contents]</sup>
 
-### 2.4. Setting up environment variables
-
-1. Create a `.env` file from the `.env.example`:
-```shell script
-make setup
-```
-
-2. Edit the values in the `.env` file.
-
-<sup>[Back to top ^][table-of-contents]</sup>
-
-### 2.5. Deploy the functions to the namespace
+### 2.6. Deploy the functions to the namespace
 
 1. Deploy the function to the namespace that was created in the [previous](#23-create-a-personal-namespace-optional) step:
 ```shell
@@ -134,16 +147,15 @@ Use this URL to interact with the API.
 
 ### 3.1. Useful commands
 
-| Command       | Description                                                                                                        |
-|---------------|--------------------------------------------------------------------------------------------------------------------|
-| `make`        | Creates the `.env` file and deploys the functions to the remote namespace. Intended for development purposes only. |
-| `make clean`  | Removes build files and configurations.                                                                            |
-| `make deploy` | Deploys the functions to the remote namespace. Intended for development purposes only.                             |
-| `make list`   | Lists the deployed functions in the configured namespace.                                                          |
-| `make logs`   | Outputs the activation logs for the deployed functions.                                                            |
-| `make setup`  | Creates the `.env` file from an `.env.example` file.                                                               |
-| `make test`   | Runs the tests for each function.                                                                                  |
-| `make watch`  | Watches for code changes and redeploys functions to namespace.                                                     |
+| Command       | Description                                                                                                                             |
+|---------------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| `make`        | Deploys the functions to the remote namespace. Intended for development purposes only.                                                  |
+| `make clean`  | Removes build files and configurations.                                                                                                 |
+| `make deploy` | Fetches secrets from Doppler and deploys the functions to the remote namespace. Intended for development purposes only.                 |
+| `make list`   | Lists the deployed functions in the configured namespace.                                                                               |
+| `make logs`   | Outputs the activation logs for the deployed functions.                                                                                 |
+| `make test`   | Runs the tests for each function.                                                                                                       |
+| `make watch`  | Fetches secrets from Doppler and watches for code changes and redeploys functions to namespace. Intended for development purposes only. |
 
 <sup>[Back to top ^][table-of-contents]</sup>
 
@@ -163,6 +175,7 @@ Please refer to the [COPYING][copying] file.
 [contribute]: ./CONTRIBUTING.md
 [copying]: ./COPYING
 [doctl]: https://docs.digitalocean.com/reference/doctl/how-to/install/
+[doppler]: https://docs.doppler.com/docs/install-cli
 [golang]: https://go.dev/doc/install
 [make]: https://www.gnu.org/software/make/
 [table-of-contents]: #table-of-contents
