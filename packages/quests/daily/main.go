@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	algosdktypes "github.com/algorand/go-algorand-sdk/v2/types"
+	algosdktypes "github.com/algorand/go-algorand-sdk/types"
 	"golang.org/x/exp/slices"
 	"lib/errors"
 	"lib/queries"
