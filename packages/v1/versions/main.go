@@ -5,15 +5,15 @@ import (
 	"net/http"
 	"os"
 	"strings"
-	internaltypes "versions/internal/types"
+	_types "versions/internal/types"
 )
 
 //go:embed VERSION
 var version string
 
-func Main() *internaltypes.Response {
-	return &internaltypes.Response{
-		Body: internaltypes.ResponseBody{
+func Main() *_types.Response {
+	return &_types.Response{
+		Body: _types.ResponseBody{
 			APIVersion:  strings.TrimSpace(version),
 			Environment: os.Getenv("ENVIRONMENT"),
 		},

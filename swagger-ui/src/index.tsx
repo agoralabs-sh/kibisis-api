@@ -3,12 +3,9 @@ import React from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import SwaggerUI from 'swagger-ui-react';
 
-// spec
-import spec from '@app/spec/swagger.json';
-
 export async function onDOMContentLoaded(): Promise<void> {
-  const _functionName: string = 'onDOMContentLoaded';
-  const rootElement: Element | null = document.getElementById('root');
+  const _functionName = 'onDOMContentLoaded';
+  const rootElement = document.getElementById('root');
   let root: Root;
 
   if (!rootElement) {
@@ -22,7 +19,7 @@ export async function onDOMContentLoaded(): Promise<void> {
   root = createRoot(rootElement);
 
   root.render(
-    <SwaggerUI spec={spec} />
+    <SwaggerUI url={__SWAGGER_SPEC_URL__} />
   );
 }
 

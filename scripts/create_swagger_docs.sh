@@ -20,7 +20,7 @@ function main {
   set_vars
 
   go_path=$(go env GOPATH)
-  routes="./.swag" # the general info must be first
+  routes="./packages/v1/docs" # the general info must be first
 
   for package_dir in ./packages/*/; do
     package_dir=${package_dir%*/} # remove the trailing "/"
@@ -34,7 +34,7 @@ function main {
 
   "${go_path}"/bin/swag init \
     --dir "${routes}" \
-    --output "${PWD}"/packages/v1/docs/src/spec \
+    --output "${PWD}"/packages/v1/docs \
     --outputTypes json
 
   exit 0

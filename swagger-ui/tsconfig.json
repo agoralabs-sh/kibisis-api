@@ -9,12 +9,13 @@
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
+    "jsx": "react",
+    "lib": ["DOM", "ESNext"],
     "module": "CommonJS",
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "paths": {
-      "@app/spec/*": ["src/spec/*"],
       "@app/types": ["src/types"]
     },
     "removeComments": false,
@@ -24,9 +25,8 @@
     "strict": false,
     "strictBindCallApply": false,
     "strictNullChecks": true,
-    "strictPropertyInitialization": false
+    "strictPropertyInitialization": false,
+    "target": "ES5"
   },
-  "include": [
-    "src/**/*"
-  ]
+  "include": ["src/**/*"]
 }
