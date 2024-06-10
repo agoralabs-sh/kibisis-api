@@ -16,7 +16,7 @@ packages:
           limits:
             timeout: 30000 # 30 seconds in milliseconds
 
-    - name: system
+    - name: v1
       shared: false
       functions:
         - name: versions
