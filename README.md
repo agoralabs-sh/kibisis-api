@@ -147,15 +147,17 @@ Use this URL to interact with the API.
 
 ### 3.1. Useful commands
 
-| Command       | Description                                                                                                                             |
-|---------------|-----------------------------------------------------------------------------------------------------------------------------------------|
-| `make`        | Deploys the functions to the remote namespace. Intended for development purposes only.                                                  |
-| `make clean`  | Removes build files and configurations.                                                                                                 |
-| `make deploy` | Fetches secrets from Doppler and deploys the functions to the remote namespace. Intended for development purposes only.                 |
-| `make list`   | Lists the deployed functions in the configured namespace.                                                                               |
-| `make logs`   | Outputs the activation logs for the deployed functions.                                                                                 |
-| `make test`   | Runs the tests for each function.                                                                                                       |
-| `make watch`  | Fetches secrets from Doppler and watches for code changes and redeploys functions to namespace. Intended for development purposes only. |
+| Command        | Description                                                                                                                             |
+|----------------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| `make`         | Deploys the functions to the remote namespace. Intended for development purposes only.                                                  |
+| `make clean`   | Removes build files and configurations.                                                                                                 |
+| `make deploy`  | Fetches secrets from Doppler and deploys the functions to the remote namespace. Intended for development purposes only.                 |
+| `make list`    | Lists the deployed functions in the configured namespace.                                                                               |
+| `make logs`    | Outputs the activation logs for the deployed functions.                                                                                 |
+| `make test`    | Runs the tests for each function.                                                                                                       |
+| `make setup`   | Installs dependencies.                                                                                                                  |
+| `make swagger` | Parses the functions and creates the swagger.json to the `packages/system/docs`.                                                        |
+| `make watch`   | Fetches secrets from Doppler and watches for code changes and redeploys functions to namespace. Intended for development purposes only. |
 
 <sup>[Back to top ^][table-of-contents]</sup>
 

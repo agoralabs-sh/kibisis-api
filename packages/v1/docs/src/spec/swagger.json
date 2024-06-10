@@ -1,0 +1,29 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Kibisis API",
+        "contact": {
+            "name": "Agora Labs Support",
+            "url": "http://www.swagger.io/support",
+            "email": "support@agoralabs.sh"
+        },
+        "license": {
+            "name": "GNU AGPLv3+",
+            "url": "https://github.com/agoralabs-sh/kibisis-api/blob/main/COPYING"
+        },
+        "version": "1.0"
+    },
+    "paths": {
+        "/quests/daily": {
+            "get": {
+                "description": "hello humie",
+                "summary": "hello",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        }
+    }
+}
