@@ -4,12 +4,6 @@ packages:
     - name: v1
       shared: false
       functions:
-        - name: docs
-          binary: true
-          main: "main"
-          runtime: go:1.20
-          web: true
-
         - name: quests
           binary: true
           main: "main"
@@ -21,6 +15,12 @@ packages:
             POSTHOG_PROJECT_ID: "${POSTHOG_PROJECT_ID}"
           limits:
             timeout: 30000 # 30 seconds in milliseconds
+
+        - name: swagger
+          binary: true
+          main: "main"
+          runtime: go:1.20
+          web: true
 
         - name: versions
           binary: true

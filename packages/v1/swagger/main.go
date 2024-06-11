@@ -11,7 +11,7 @@ var swaggerJSON string
 
 // @title Kibisis API
 // @version 1.0
-// @description
+// @description The Kibisis API provides analytics queries and token data.
 
 // @contact.name   Agora Labs Support
 // @contact.email  support@agoralabs.sh
