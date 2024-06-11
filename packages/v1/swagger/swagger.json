@@ -1,10 +1,10 @@
 {
     "swagger": "2.0",
     "info": {
+        "description": "The Kibisis API provides analytics queries and token data.",
         "title": "Kibisis API",
         "contact": {
             "name": "Agora Labs Support",
-            "url": "http://www.swagger.io/support",
             "email": "support@agoralabs.sh"
         },
         "license": {

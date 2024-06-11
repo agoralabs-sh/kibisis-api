@@ -13,15 +13,15 @@
     [
       "@semantic-release/exec",
       {
-        "prepareCmd": "./scripts/update_version.sh ${nextRelease.version} && ./scripts/create_swagger_docs.sh"
+        "prepareCmd": "./scripts/update_version.sh ${nextRelease.version} && make swagger"
       }
     ],
     [
       "@semantic-release/git",
       {
         "assets": [
-          "packages/v1/swagger/swagger.json",
-          "packages/v1/versions/VERSION",
+          "packages/**/*/swagger.json",
+          "packages/**/*/VERSION",
           "CHANGELOG.md"
         ],
         "message": "chore(release): ${nextRelease.version}\n\n${nextRelease.notes}"

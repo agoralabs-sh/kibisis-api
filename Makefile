@@ -15,7 +15,7 @@ setup:
 	go install github.com/swaggo/swag/cmd/swag@latest # install swag cli
 
 swagger:
-	$(scripts_dir)/create_swagger_docs.sh
+	$(scripts_dir)/create_swagger_docs.sh 1 # v1
 
 test:
 	$(scripts_dir)/test.sh
