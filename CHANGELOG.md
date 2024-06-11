@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/agoralabs-sh/kibisis-api/compare/v1.0.0...v1.1.0) (2024-06-11)
+
+
+### Features
+
+* add swagger documentation ([#8](https://github.com/agoralabs-sh/kibisis-api/issues/8)) ([6f34fd7](https://github.com/agoralabs-sh/kibisis-api/commit/6f34fd7c5dbd6b9a61abf1dd7eec7bd077d3c741))
+
 # [1.1.0-beta.1](https://github.com/agoralabs-sh/kibisis-api/compare/v1.0.0...v1.1.0-beta.1) (2024-06-11)
 
 
