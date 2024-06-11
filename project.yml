@@ -1,10 +1,10 @@
 environment:
   ENVIRONMENT: "${ENVIRONMENT}"
 packages:
-    - name: quests
+    - name: v1
       shared: false
       functions:
-        - name: daily
+        - name: quests
           binary: true
           main: "main"
           runtime: go:1.20
@@ -16,9 +16,12 @@ packages:
           limits:
             timeout: 30000 # 30 seconds in milliseconds
 
-    - name: system
-      shared: false
-      functions:
+        - name: swagger
+          binary: true
+          main: "main"
+          runtime: go:1.20
+          web: true
+
         - name: versions
           binary: true
           main: "main"

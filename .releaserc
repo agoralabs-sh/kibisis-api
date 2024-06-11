@@ -1,5 +1,11 @@
 {
-  "branches": ["main", { "name": "beta", "prerelease": true }],
+  "branches": [
+    "main",
+    {
+      "name":"beta",
+      "prerelease": true
+    }
+  ],
   "plugins": [
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
@@ -7,13 +13,17 @@
     [
       "@semantic-release/exec",
       {
-        "prepareCmd": "./scripts/update_version.sh ${nextRelease.version}"
+        "prepareCmd": "./scripts/update_version.sh ${nextRelease.version} && make swagger"
       }
     ],
     [
       "@semantic-release/git",
       {
-        "assets": ["packages/system/versions/VERSION", "CHANGELOG.md"],
+        "assets": [
+          "packages/**/*/swagger.json",
+          "packages/**/*/VERSION",
+          "CHANGELOG.md"
+        ],
         "message": "chore(release): ${nextRelease.version}\n\n${nextRelease.notes}"
       }
     ],

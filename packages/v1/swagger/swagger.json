@@ -1,0 +1,116 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "The Kibisis API provides analytics queries and token data.",
+        "title": "Kibisis API",
+        "contact": {
+            "name": "Agora Labs Support",
+            "email": "support@agoralabs.sh"
+        },
+        "license": {
+            "name": "GNU AGPLv3+",
+            "url": "https://github.com/agoralabs-sh/kibisis-api/blob/main/COPYING"
+        },
+        "version": "1.0"
+    },
+    "paths": {
+        "/v1/quests": {
+            "get": {
+                "description": "Gets the daily quests, as of 00:00:00 UTC, a given account.",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Daily Quests",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "example": "TESTK4BURRDGVVHAX2FBY7CPRC2RTTVRRN4C2TVDCHRCXNTFGL3TVSDROE",
+                        "description": "account to get daily quests",
+                        "name": "account",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/quests_internal_types.ResponseBody"
+                        }
+                    },
+                    "400": {
+                        "description": "if the account param is not provided or invalid",
+                        "schema": {
+                            "$ref": "#/definitions/quests_internal_types.ResponseBody"
+                        }
+                    },
+                    "405": {
+                        "description": "will return if it is not a GET request",
+                        "schema": {
+                            "$ref": "#/definitions/quests_internal_types.ResponseBody"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/v1/versions": {
+            "get": {
+                "description": "Gets API information including the environment and version.",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "API Information",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/versions_internal_types.ResponseBody"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "quests_internal_types.ResponseBody": {
+            "type": "object",
+            "properties": {
+                "account": {
+                    "type": "string"
+                },
+                "error": {},
+                "quests": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/types.DailyQuest"
+                    }
+                }
+            }
+        },
+        "types.DailyQuest": {
+            "type": "object",
+            "properties": {
+                "completed": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "string"
+                }
+            }
+        },
+        "versions_internal_types.ResponseBody": {
+            "type": "object",
+            "properties": {
+                "apiVersion": {
+                    "type": "string"
+                },
+                "environment": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

@@ -5,13 +5,22 @@ import (
 	algosdktypes "github.com/algorand/go-algorand-sdk/types"
 	"golang.org/x/exp/slices"
 	"lib/errors"
-	"lib/queries"
 	"lib/utils"
 	"net/http"
 	_queries "quests/internal/queries"
 	_types "quests/internal/types"
 )
 
+// Main godoc
+// @Summary Daily Quests
+// @Description Gets the daily quests, as of 00:00:00 UTC, a given account.
+// @Produce json
+// @Param account query string true "account to get daily quests" Example(TESTK4BURRDGVVHAX2FBY7CPRC2RTTVRRN4C2TVDCHRCXNTFGL3TVSDROE)
+// @Success 200 {object} _types.ResponseBody
+// @failure 400 {object} _types.ResponseBody "if the account param is not provided or invalid"
+// @failure 405 {object} _types.ResponseBody "will return if it is not a GET request"
+// @failure 500 {object} _types.ResponseBody
+// @Router /v1/quests [get]
 func Main(request _types.Request) *_types.Response {
 	var dailyQuests []_types.DailyQuest
 
@@ -38,7 +47,7 @@ func Main(request _types.Request) *_types.Response {
 
 	logger.Debug("getting event references from posthog")
 
-	eventReferences, err := queries.FetchEventReferences(logger)
+	eventReferences, err := _queries.FetchEventReferences(logger)
 	if err != nil {
 		return &_types.Response{
 			Body: _types.ResponseBody{
