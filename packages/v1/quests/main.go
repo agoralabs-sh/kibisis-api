@@ -18,9 +18,11 @@ import (
 // @Produce json
 // @Param account query string true "account to get daily quests" Example(TESTK4BURRDGVVHAX2FBY7CPRC2RTTVRRN4C2TVDCHRCXNTFGL3TVSDROE)
 // @Success 200 {object} _types.ResponseBody
-// @failure 400 {object} _types.ResponseBody "if the account param is not provided or invalid"
-// @failure 405 {object} _types.ResponseBody "will return if it is not a GET request"
-// @failure 500 {object} _types.ResponseBody
+// @Failure 400 "If the account param is not provided"
+// @Failure 400 "If the account param is an invalid AVM address"
+// @Failure 405 "If it is not a GET or OPTIONS request"
+// @Failure 500
+// @Header all {string} Cache-Control "public, max-age=3600"
 // @Router /v1/quests [get]
 func Main(request _types.Request) *_types.Response {
 	var dailyQuests []_types.DailyQuest

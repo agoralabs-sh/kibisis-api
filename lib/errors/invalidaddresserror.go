@@ -6,10 +6,10 @@ import (
 )
 
 type InvalidAddressError struct {
-	Address string
-	Code    int
-	Message string
-	Name    string
+	Address string `json:"address"`
+	Code    int    `json:"code"`
+	Message string `json:"message"`
+	Name    string `json:"name"`
 }
 
 func NewInvalidAddressError(address string) *InvalidAddressError {

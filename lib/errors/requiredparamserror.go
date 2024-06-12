@@ -6,10 +6,10 @@ import (
 )
 
 type RequiredParamsError struct {
-	Code    int
-	Message string
-	Name    string
-	Params  []string
+	Code    int      `json:"code"`
+	Message string   `json:"message"`
+	Name    string   `json:"name"`
+	Params  []string `json:"params"`
 }
 
 func NewRequiredParamsError(params []string) *RequiredParamsError {

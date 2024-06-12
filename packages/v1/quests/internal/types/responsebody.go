@@ -1,7 +1,9 @@
 package types
 
 type ResponseBody struct {
-	Account string       `json:"account,omitempty"`
-	Error   interface{}  `json:"error,omitempty"`
-	Quests  []DailyQuest `json:"quests,omitempty"`
+	// The account address
+	Account string      `json:"account,omitempty" example:"TESTK4BURRDGVVHAX2FBY7CPRC2RTTVRRN4C2TVDCHRCXNTFGL3TVSDROE"`
+	Error   interface{} `json:"error,omitempty" swaggertype:"object"`
+	// The completed quests
+	Quests []DailyQuest `json:"quests,omitempty"`
 }

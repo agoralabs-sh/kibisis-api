@@ -1,6 +1,8 @@
 package types
 
 type ResponseBody struct {
-	APIVersion  string `json:"apiVersion"`
-	Environment string `json:"environment"`
+	// The semantic version of the API
+	APIVersion string `json:"apiVersion" example:"1.1.0"`
+	// The API environment
+	Environment string `json:"environment" example:"production"`
 }
