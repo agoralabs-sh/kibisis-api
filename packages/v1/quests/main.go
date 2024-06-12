@@ -28,6 +28,7 @@ func Main(request _types.Request) *_types.Response {
 	logger := utils.NewLogger()
 	headers := _types.ResponseHeaders{
 		CacheControl: fmt.Sprintf("public, max-age=%d", constants.HourInSeconds),
+		ContentType:  "application/json",
 	}
 
 	// only accept get requests
@@ -38,7 +39,19 @@ func Main(request _types.Request) *_types.Response {
 		}
 	}
 
-	logger.Debug(fmt.Sprintf("validating account \"%s\"", request.Account))
+	logger.Debug("validating params")
+
+	if request.Account == "" {
+		return &_types.Response{
+			Body: _types.ResponseBody{
+				Error: errors.NewRequiredParamsError([]string{"account"}),
+			},
+			Headers:    headers,
+			StatusCode: http.StatusBadRequest,
+		}
+	}
+
+	logger.Debug(fmt.Sprintf("validating account \"%s\" param", request.Account))
 
 	_, err := algosdktypes.DecodeAddress(request.Account)
 	if err != nil {
