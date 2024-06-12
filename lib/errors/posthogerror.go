@@ -3,9 +3,10 @@ package errors
 import "lib/constants"
 
 type PostHogError struct {
-	Code    int
-	Error   error
-	Message string
+	Code    int    `json:"code"`
+	Error   error  `json:"error"`
+	Message string `json:"message"`
+	Name    string `json:"name"`
 }
 
 func NewPostHogError(message string, error error) *PostHogError {
@@ -13,5 +14,6 @@ func NewPostHogError(message string, error error) *PostHogError {
 		Code:    constants.PostHogError,
 		Error:   error,
 		Message: message,
+		Name:    "PostHogError",
 	}
 }

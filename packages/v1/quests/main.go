@@ -4,6 +4,7 @@ import (
 	"fmt"
 	algosdktypes "github.com/algorand/go-algorand-sdk/types"
 	"golang.org/x/exp/slices"
+	"lib/constants"
 	"lib/errors"
 	"lib/utils"
 	"net/http"
@@ -17,23 +18,42 @@ import (
 // @Produce json
 // @Param account query string true "account to get daily quests" Example(TESTK4BURRDGVVHAX2FBY7CPRC2RTTVRRN4C2TVDCHRCXNTFGL3TVSDROE)
 // @Success 200 {object} _types.ResponseBody
-// @failure 400 {object} _types.ResponseBody "if the account param is not provided or invalid"
-// @failure 405 {object} _types.ResponseBody "will return if it is not a GET request"
-// @failure 500 {object} _types.ResponseBody
+// @Failure 400 "If the account param is not provided"
+// @Failure 400 "If the account param is an invalid AVM address"
+// @Failure 405 "If it is not a GET request"
+// @Failure 500
+// @Header all {string} Cache-Control "public, max-age=3600"
 // @Router /v1/quests [get]
 func Main(request _types.Request) *_types.Response {
 	var dailyQuests []_types.DailyQuest
 
 	logger := utils.NewLogger()
+	headers := _types.ResponseHeaders{
+		CacheControl: fmt.Sprintf("public, max-age=%d", constants.HourInSeconds),
+		ContentType:  "application/json",
+	}
 
 	// only accept get requests
 	if request.Http.Method != http.MethodGet {
 		return &_types.Response{
+			Headers:    headers,
 			StatusCode: http.StatusMethodNotAllowed,
 		}
 	}
 
-	logger.Debug(fmt.Sprintf("validating account \"%s\"", request.Account))
+	logger.Debug("validating params")
+
+	if request.Account == "" {
+		return &_types.Response{
+			Body: _types.ResponseBody{
+				Error: errors.NewRequiredParamsError([]string{"account"}),
+			},
+			Headers:    headers,
+			StatusCode: http.StatusBadRequest,
+		}
+	}
+
+	logger.Debug(fmt.Sprintf("validating account \"%s\" param", request.Account))
 
 	_, err := algosdktypes.DecodeAddress(request.Account)
 	if err != nil {
@@ -41,6 +61,7 @@ func Main(request _types.Request) *_types.Response {
 			Body: _types.ResponseBody{
 				Error: errors.NewInvalidAddressError(request.Account),
 			},
+			Headers:    headers,
 			StatusCode: http.StatusBadRequest,
 		}
 	}
@@ -53,6 +74,7 @@ func Main(request _types.Request) *_types.Response {
 			Body: _types.ResponseBody{
 				Error: errors.NewPostHogError("failed to fetch event references from posthog", err),
 			},
+			Headers:    headers,
 			StatusCode: http.StatusInternalServerError,
 		}
 	}
@@ -67,6 +89,7 @@ func Main(request _types.Request) *_types.Response {
 			Body: _types.ResponseBody{
 				Error: errors.NewPostHogError("failed to fetch daily events from posthog", err),
 			},
+			Headers:    headers,
 			StatusCode: http.StatusInternalServerError,
 		}
 	}
@@ -96,6 +119,7 @@ func Main(request _types.Request) *_types.Response {
 			Account: request.Account,
 			Quests:  dailyQuests,
 		},
+		Headers:    headers,
 		StatusCode: http.StatusOK,
 	}
 }

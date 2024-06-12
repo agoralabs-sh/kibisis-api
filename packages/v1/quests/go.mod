@@ -1,6 +1,6 @@
 module quests
 
-go 1.21
+go 1.20
 
 require (
 	github.com/algorand/go-algorand-sdk v1.24.0

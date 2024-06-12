@@ -36,22 +36,40 @@
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/quests_internal_types.ResponseBody"
+                        },
+                        "headers": {
+                            "Cache-Control": {
+                                "type": "string",
+                                "description": "public, max-age=3600"
+                            }
                         }
                     },
                     "400": {
-                        "description": "if the account param is not provided or invalid",
-                        "schema": {
-                            "$ref": "#/definitions/quests_internal_types.ResponseBody"
+                        "description": "If the account param is an invalid AVM address",
+                        "headers": {
+                            "Cache-Control": {
+                                "type": "string",
+                                "description": "public, max-age=3600"
+                            }
                         }
                     },
                     "405": {
-                        "description": "will return if it is not a GET request",
-                        "schema": {
-                            "$ref": "#/definitions/quests_internal_types.ResponseBody"
+                        "description": "If it is not a GET or OPTIONS request",
+                        "headers": {
+                            "Cache-Control": {
+                                "type": "string",
+                                "description": "public, max-age=3600"
+                            }
                         }
                     },
                     "500": {
-                        "description": "Internal Server Error"
+                        "description": "Internal Server Error",
+                        "headers": {
+                            "Cache-Control": {
+                                "type": "string",
+                                "description": "public, max-age=3600"
+                            }
+                        }
                     }
                 }
             }
@@ -68,6 +86,12 @@
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/versions_internal_types.ResponseBody"
+                        },
+                        "headers": {
+                            "Cache-Control": {
+                                "type": "string",
+                                "description": "public, max-age=604800"
+                            }
                         }
                     }
                 }
@@ -79,10 +103,15 @@
             "type": "object",
             "properties": {
                 "account": {
-                    "type": "string"
+                    "description": "The account address",
+                    "type": "string",
+                    "example": "TESTK4BURRDGVVHAX2FBY7CPRC2RTTVRRN4C2TVDCHRCXNTFGL3TVSDROE"
                 },
-                "error": {},
+                "error": {
+                    "type": "object"
+                },
                 "quests": {
+                    "description": "The completed quests",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/types.DailyQuest"
@@ -91,13 +120,18 @@
             }
         },
         "types.DailyQuest": {
+            "description": "The ID of the quest and the amount of times it has been completed.",
             "type": "object",
             "properties": {
                 "completed": {
-                    "type": "integer"
+                    "description": "The amount of times the quest has been completed",
+                    "type": "integer",
+                    "example": 22
                 },
                 "id": {
-                    "type": "string"
+                    "description": "The ID of the quest",
+                    "type": "string",
+                    "example": "send-native-currency-action"
                 }
             }
         },
@@ -105,10 +139,14 @@
             "type": "object",
             "properties": {
                 "apiVersion": {
-                    "type": "string"
+                    "description": "The semantic version of the API",
+                    "type": "string",
+                    "example": "1.1.0"
                 },
                 "environment": {
-                    "type": "string"
+                    "description": "The API environment",
+                    "type": "string",
+                    "example": "production"
                 }
             }
         }

@@ -54,11 +54,11 @@
 
 ### 1.1. Project structure
 
-The project structure is based on the [DigitalOcean functions][https://docs.digitalocean.com/products/functions/how-to/structure-projects/] project structure.
+The project structure is based on the DigitalOcean [functions](https://docs.digitalocean.com/products/functions/how-to/structure-projects) project structure.
 However, the core directories `lib` and `packages` have specific functionality:
 
-* `packages` - This is where each function resides. Each package/function relates to the API path. For example, `achievements/quest` will correspond to an API path `https://<endpoint>/achievements/quests`
-* `lib` - This contains is independent modules that are referenced from the packages.
+* `packages` - This is where each function resides. Each package/function relates to a versioned API path. For example, `v1/quests` will correspond to an API path `https://<endpoint>/v1/quests`
+* `lib` - This contains independent modules that are referenced from the packages.
 
 > ⚠️ **NOTE:** Each path must parse the request header and handle the method, i.e. GET, POST, DELETE e.t.c.
 
@@ -91,15 +91,15 @@ To start using your own Doppler config, go to the project on [Doppler](https://d
 
 Once the branch project config has been setup, follow the instructions [here](https://docs.doppler.com/docs/install-cli#project-setup) to:
 * login to Doppler, and;
-* setup Doppler to use the kibisis-api project with your personal config.
+* setup Doppler to use the `kibisis-api` project with your personal config.
 
-> ⚠️ **NOTE:** When naming your token, it is recommended you use: "<name>-<device_name>".
+> ⚠️ **NOTE:** When naming your token, it is recommended you use: "<your_name>-<device_name>".
 
 <sup>[Back to top ^][table-of-contents]</sup>
 
 ### 2.4. Setup `doctl`
 
-The DigitalOcean CLI client, `doctl`, is used to deploy the function to a remote environment tha can be used to develop.
+The DigitalOcean CLI client, `doctl`, is used to deploy the function to a remote environment that can be used to develop.
 
 Follow the instructions outlined in the [documentation][doctl].
 

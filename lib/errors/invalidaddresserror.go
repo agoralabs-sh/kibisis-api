@@ -6,9 +6,10 @@ import (
 )
 
 type InvalidAddressError struct {
-	Address string
-	Code    int
-	Message string
+	Address string `json:"address"`
+	Code    int    `json:"code"`
+	Message string `json:"message"`
+	Name    string `json:"name"`
 }
 
 func NewInvalidAddressError(address string) *InvalidAddressError {
@@ -16,5 +17,6 @@ func NewInvalidAddressError(address string) *InvalidAddressError {
 		Address: address,
 		Code:    constants.InvalidAddressError,
 		Message: fmt.Sprintf("address \"%s\" is not a valid address", address),
+		Name:    "InvalidAddressError",
 	}
 }
