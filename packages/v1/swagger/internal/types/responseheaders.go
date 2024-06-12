@@ -1,5 +1,6 @@
 package types
 
 type ResponseHeaders struct {
-	ContentType string `json:"Content-Type"`
+	CacheControl string `json:"Cache-Control"`
+	ContentType  string `json:"Content-Type"`
 }

@@ -2,6 +2,8 @@ package main
 
 import (
 	_ "embed"
+	"fmt"
+	"lib/constants"
 	"net/http"
 	"os"
 	"strings"
@@ -22,6 +24,9 @@ func Main() *_types.Response {
 		Body: _types.ResponseBody{
 			APIVersion:  strings.TrimSpace(version),
 			Environment: os.Getenv("ENVIRONMENT"),
+		},
+		Headers: _types.ResponseHeaders{
+			CacheControl: fmt.Sprintf("public, max-age=%d", constants.TwentyFourHoursInSeconds),
 		},
 		StatusCode: http.StatusOK,
 	}

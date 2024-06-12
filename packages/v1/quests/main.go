@@ -4,6 +4,7 @@ import (
 	"fmt"
 	algosdktypes "github.com/algorand/go-algorand-sdk/types"
 	"golang.org/x/exp/slices"
+	"lib/constants"
 	"lib/errors"
 	"lib/utils"
 	"net/http"
@@ -25,10 +26,14 @@ func Main(request _types.Request) *_types.Response {
 	var dailyQuests []_types.DailyQuest
 
 	logger := utils.NewLogger()
+	headers := _types.ResponseHeaders{
+		CacheControl: fmt.Sprintf("public, max-age=%d", constants.HourInSeconds),
+	}
 
 	// only accept get requests
 	if request.Http.Method != http.MethodGet {
 		return &_types.Response{
+			Headers:    headers,
 			StatusCode: http.StatusMethodNotAllowed,
 		}
 	}
@@ -41,6 +46,7 @@ func Main(request _types.Request) *_types.Response {
 			Body: _types.ResponseBody{
 				Error: errors.NewInvalidAddressError(request.Account),
 			},
+			Headers:    headers,
 			StatusCode: http.StatusBadRequest,
 		}
 	}
@@ -53,6 +59,7 @@ func Main(request _types.Request) *_types.Response {
 			Body: _types.ResponseBody{
 				Error: errors.NewPostHogError("failed to fetch event references from posthog", err),
 			},
+			Headers:    headers,
 			StatusCode: http.StatusInternalServerError,
 		}
 	}
@@ -67,6 +74,7 @@ func Main(request _types.Request) *_types.Response {
 			Body: _types.ResponseBody{
 				Error: errors.NewPostHogError("failed to fetch daily events from posthog", err),
 			},
+			Headers:    headers,
 			StatusCode: http.StatusInternalServerError,
 		}
 	}
@@ -96,6 +104,7 @@ func Main(request _types.Request) *_types.Response {
 			Account: request.Account,
 			Quests:  dailyQuests,
 		},
+		Headers:    headers,
 		StatusCode: http.StatusOK,
 	}
 }
