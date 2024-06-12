@@ -20,7 +20,7 @@ import (
 // @Success 200 {object} _types.ResponseBody
 // @Failure 400 "If the account param is not provided"
 // @Failure 400 "If the account param is an invalid AVM address"
-// @Failure 405 "If it is not a GET or OPTIONS request"
+// @Failure 405 "If it is not a GET request"
 // @Failure 500
 // @Header all {string} Cache-Control "public, max-age=3600"
 // @Router /v1/quests [get]
