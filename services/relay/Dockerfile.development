@@ -32,5 +32,5 @@ WORKDIR /usr/app
 # copy the dependencies
 #COPY --from=installer /go/pkg /go/pkg
 
-CMD ["/bin/sh", "-c", "./scripts/start_dev_service.sh ${SERVICE_NAME}"]
+CMD ["/bin/sh", "-c", "./scripts/start_service.sh ${SERVICE_NAME}"]
 #ENTRYPOINT ["tail", "-f", "/dev/null"]

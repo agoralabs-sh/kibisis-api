@@ -1,9 +1,8 @@
 scripts_dir := ./scripts
 
-all: setup swagger deploy
+.PHONY: services
 
-dev_services:
-	docker compose -f ./deployments/docker-compose.yml up --build
+all: setup swagger deploy
 
 deploy:
 	doppler run -- doctl serverless deploy "${PWD}"
@@ -13,6 +12,9 @@ list:
 
 logs:
 	doctl serverless activations logs --follow
+
+services:
+	doppler run -- docker compose -f ./deployments/docker-compose.yml up --build
 
 setup:
 	go install github.com/swaggo/swag/cmd/swag@latest # install swag cli

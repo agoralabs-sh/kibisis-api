@@ -10,14 +10,18 @@ source "${SCRIPT_DIR}"/set_vars.sh
 #
 # Examples
 #
-#   ./bin/start_dev_service.sh "relay"
+#   ./bin/start_service.sh "relay"
 #
 # Returns exit code 0.
 function main() {
   set_vars
 
   printf "%b starting ${1} service...\n" "${INFO_PREFIX}"
-  (cd services/${1} && CompileDaemon -build="go build -o ${BUILD_DIR}/${1} cmd/${1}/main.go" -command="${BUILD_DIR}/${1}")
+  (cd services/${1} && \
+    CompileDaemon \
+    -build="go build -o ${BUILD_DIR}/${1} cmd/${1}/main.go" \
+    -color=true \
+    -command="${BUILD_DIR}/${1}")
 
   printf "%b done!\n" "${INFO_PREFIX}"
 

@@ -10,9 +10,13 @@ services:
       args:
         service_name: "relay"
       context: ../
-      dockerfile: ./build/package/default/Dockerfile.development
+      dockerfile: ./services/relay/Dockerfile.development
     container_name: kibisis_api_relay
     environment:
+      # runtime
+      ENVIRONMENT:
+      RELAY_PORT:
+      # build-time
       SERVICE_NAME: "relay"
     image: kibisis/relay
     networks:

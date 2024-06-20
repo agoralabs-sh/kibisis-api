@@ -54,13 +54,32 @@
 
 ### 1.1. Project structure
 
-The project structure is based on the DigitalOcean [functions](https://docs.digitalocean.com/products/functions/how-to/structure-projects) project structure.
-However, the core directories `lib` and `packages` have specific functionality:
+The project structure borrows a lot from the project laid out by [https://github.com/golang-standards/project-layout](https://github.com/golang-standards/project-layout), with the exception of the `packages` and `lib` directories.
 
-* `packages` - This is where each function resides. Each package/function relates to a versioned API path. For example, `v1/quests` will correspond to an API path `https://<endpoint>/v1/quests`
-* `lib` - This contains independent modules that are referenced from the packages.
+These directories are necessary due to the use of [DigitalOcean](https://docs.digitalocean.com/products/functions/how-to/structure-projects/)'s functions. See [below](#packages) for more details.
+
+### `deployments`
+
+This contains the Docker Compose configuration file(s). This is solely used for development purposes and is the orchestration for all the services in the `services/` directory.
+
+### `lib`
+
+This is a standalone module that is imported from the other packages or services and contains common code.
+
+### `packages`
+
+This is where each of functions resides. Each package corresponds to a version of the API and contains a list of functions, where each function relates to an API path.
+
+For example, `v1/quests` will correspond to an API path `https://<endpoint>/v1/quests`.
 
 > ⚠️ **NOTE:** Each path must parse the request header and handle the method, i.e. GET, POST, DELETE e.t.c.
+
+### `services`
+
+Each subdirectory is a service that follows the standard layout for a Go module:
+
+* `services/<service>/cmd` - The main applications for the service resides in this directory where the directory name for each application should match the name of the executable you want to have (e.g., `/cmd/relay`).
+* `services/<service>/internal` - Common application and library code for the service.
 
 <sup>[Back to top ^][table-of-contents]</sup>
 
@@ -69,6 +88,7 @@ However, the core directories `lib` and `packages` have specific functionality:
 ### 2.1. Requirements
 
 * [DigitalOcean CLI][doctl]
+* [Docker Compose v2.5.0+][docker-compose]
 * [Doppler CLI][doppler]
 * [Golang v1.20+][golang]
 * [Make][make]
@@ -176,6 +196,7 @@ Please refer to the [COPYING][copying] file.
 <!-- Links -->
 [contribute]: ./CONTRIBUTING.md
 [copying]: ./COPYING
+[docker-compose]: https://docs.docker.com/compose/install/
 [doctl]: https://docs.digitalocean.com/reference/doctl/how-to/install/
 [doppler]: https://docs.doppler.com/docs/install-cli
 [golang]: https://go.dev/doc/install
