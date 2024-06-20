@@ -1,0 +1,36 @@
+####
+# This stage installs all the dependencies.
+####
+FROM golang:1.20-alpine AS installer
+
+ARG service_name
+
+# install the required dependencies: git
+RUN apk update \
+    && apk add --no-cache git
+
+WORKDIR /usr/app/services/${service_name}
+
+# download and verify dependencies
+#RUN go mod download
+#RUN go mod verify
+
+####
+# This stage copies over the dependencies from the previous build and runs the Go program.
+####
+FROM golang:1.20-alpine AS composer
+
+ENV GO111MODULE=on
+
+# install the required dependencies: CompileDaemon, bash and make
+RUN apk update \
+    && apk add --no-cache bash make
+RUN go install github.com/githubnemo/CompileDaemon@latest
+
+WORKDIR /usr/app
+
+# copy the dependencies
+#COPY --from=installer /go/pkg /go/pkg
+
+CMD ["/bin/sh", "-c", "./scripts/start_dev_service.sh ${SERVICE_NAME}"]
+#ENTRYPOINT ["tail", "-f", "/dev/null"]

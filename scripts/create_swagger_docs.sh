@@ -50,5 +50,5 @@ function main {
   exit 0
 }
 
-# And so, it begins...
+# and so, it begins...
 main "$@"

@@ -1,0 +1,29 @@
+version: '3.5'
+
+services:
+  ###
+  # applications
+  ###
+
+  relay:
+    build:
+      args:
+        service_name: "relay"
+      context: ../
+      dockerfile: ./build/package/default/Dockerfile.development
+    container_name: kibisis_api_relay
+    environment:
+      SERVICE_NAME: "relay"
+    image: kibisis/relay
+    networks:
+      - kibisis
+    ports:
+      - "${RELAY_PORT:-3000}:${RELAY_PORT:-3000}"
+    volumes:
+      - ../services/relay:/usr/app/services/relay:cached
+      - ../lib:/usr/app/lib:cached
+      - ../scripts:/usr/app/scripts:cached
+
+networks:
+  kibisis:
+    name: kibisis

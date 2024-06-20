@@ -2,6 +2,9 @@ scripts_dir := ./scripts
 
 all: setup swagger deploy
 
+dev_services:
+	docker compose -f ./deployments/docker-compose.yml up --build
+
 deploy:
 	doppler run -- doctl serverless deploy "${PWD}"
 
