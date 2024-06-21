@@ -1,13 +1,13 @@
 package models
 
 import (
-	"github.com/kamva/mgm/v3"
+	"lib/models"
 	"relayer/internal/types"
 )
 
 type Pairing struct {
-	mgm.DefaultModel `bson:",inline"`
-	Peers            []interface{} `json:"peers" bson:"peers"`
+	models.DefaultModel `bson:",inline"`
+	Peers               []interface{} `json:"peers" bson:"peers"`
 }
 
 func NewPairing(client *types.ClientPeer, provider *types.ProviderPeer) *Pairing {
