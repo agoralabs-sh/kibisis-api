@@ -16,6 +16,9 @@ logs:
 services:
 	doppler run -- docker compose -f ./deployments/docker-compose.yml up --build
 
+services-relayer:
+	doppler run -- docker compose -f ./deployments/docker-compose.yml up relayer --build
+
 setup:
 	go install github.com/swaggo/swag/cmd/swag@latest # install swag cli
 

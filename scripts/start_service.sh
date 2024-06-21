@@ -19,7 +19,7 @@ function main() {
   printf "%b starting ${1} service...\n" "${INFO_PREFIX}"
   (cd services/${1} && \
     CompileDaemon \
-    -build="go build -o ${BUILD_DIR}/${1} cmd/${1}/main.go" \
+    -build="go build -o ${BUILD_DIR}/${1} cmd/server/main.go" \
     -color=true \
     -command="${BUILD_DIR}/${1}")
 

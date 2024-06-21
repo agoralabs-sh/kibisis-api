@@ -5,29 +5,54 @@ services:
   # applications
   ###
 
-  relay:
+  relayer:
     build:
-      args:
-        service_name: "relay"
       context: ../
-      dockerfile: ./services/relay/Dockerfile.development
-    container_name: kibisis_api_relay
+      dockerfile: ./services/relayer/Dockerfile.development
+    container_name: kibisis_relayer
+    depends_on:
+      - mongodb
     environment:
       # runtime
-      ENVIRONMENT:
-      RELAY_PORT:
+      ENVIRONMENT: ${ENVIRONMENT:-development}
+      MONGODB_HOST: ${MONGODB_HOST:-mongodb}
+      MONGODB_NAME: ${MONGODB_NAME:-api}
+      MONGODB_PASSWORD: ${MONGODB_PASSWORD:-password}
+      MONGODB_PORT: ${MONGODB_PORT:-27017}
+      MONGODB_PROTOCOL: ${MONGODB_PROTOCOL:-mongodb://}
+      MONGODB_USERNAME: ${MONGODB_USERNAME:-admin}
+      RELAYER_PORT:
       # build-time
-      SERVICE_NAME: "relay"
-    image: kibisis/relay
+      SERVICE_NAME: "relayer"
+    image: kibisis/relayer
     networks:
-      - kibisis
+      - kibisis_network
     ports:
-      - "${RELAY_PORT:-3000}:${RELAY_PORT:-3000}"
+      - "${RELAYER_PORT:-3000}:${RELAYER_PORT:-3000}"
     volumes:
-      - ../services/relay:/usr/app/services/relay:cached
+      - ../services/relayer:/usr/app/services/relayer:cached
       - ../lib:/usr/app/lib:cached
       - ../scripts:/usr/app/scripts:cached
 
+  ###
+  # databases
+  ###
+
+  mongodb:
+    build:
+      context: ../
+      dockerfile: ./build/mongodb/Dockerfile.development
+    container_name: kibisis_mongodb
+    environment:
+      MONGO_INITDB_DATABASE: ${MONGODB_NAME:-api}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD:-password}
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USERNAME:-admin}
+    image: kibisis/mongodb
+    networks:
+      - kibisis_network
+    ports:
+      - "${MONGODB_PORT:-27017}:${MONGODB_PORT:-27017}"
+
 networks:
-  kibisis:
-    name: kibisis
+  kibisis_network:
+    name: kibisis_network

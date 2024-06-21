@@ -90,7 +90,7 @@ Each subdirectory is a service that follows the standard layout for a Go module:
 * [DigitalOcean CLI][doctl]
 * [Docker Compose v2.5.0+][docker-compose]
 * [Doppler CLI][doppler]
-* [Golang v1.20+][golang]
+* [Golang v1.22+][golang]
 * [Make][make]
 
 <sup>[Back to top ^][table-of-contents]</sup>

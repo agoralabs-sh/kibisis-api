@@ -87,6 +87,13 @@ func (logger *Logger) Error(message interface{}) {
 	}
 }
 
+func (logger *Logger) Fatal(message interface{}) {
+	pc, filename, line, _ := runtime.Caller(1)
+	prefix := color.New(color.FgRed).SprintFunc()
+
+	log.Fatalf("%s in %s[%s:%d] %v", prefix("[fatal]"), runtime.FuncForPC(pc).Name(), filename, line, message)
+}
+
 func (logger *Logger) Info(message interface{}) {
 	if logger.canLog(LogLevelInfo) {
 		// use 1 to get the caller of this function
