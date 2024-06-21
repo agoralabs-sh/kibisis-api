@@ -1,7 +1,7 @@
 package main
 
 import (
-	"lib/constants"
+	"lib/enums"
 	"lib/errors"
 	"lib/types"
 	"log"
@@ -59,7 +59,7 @@ func TestInvalidAccount(t *testing.T) {
 	if response.StatusCode != http.StatusBadRequest {
 		t.Errorf("expected \"statusCode\" to be \"%d\", got %d", http.StatusBadRequest, response.StatusCode)
 	}
-	if response.Body.Error.(*errors.InvalidAddressError).Code != constants.InvalidAddressError {
-		t.Errorf("expected \"body.error.code\" to be \"%d\", got %d", constants.InvalidAddressError, response.Body.Error.(*errors.InvalidAddressError).Code)
+	if response.Body.Error.(*errors.InvalidAddressError).Code != enums.InvalidAddressError {
+		t.Errorf("expected \"body.error.code\" to be \"%d\", got %d", enums.InvalidAddressError, response.Body.Error.(*errors.InvalidAddressError).Code)
 	}
 }

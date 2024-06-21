@@ -1,6 +1,8 @@
 package errors
 
-import "lib/constants"
+import (
+	"lib/enums"
+)
 
 type PostHogError struct {
 	Code    int    `json:"code"`
@@ -11,7 +13,7 @@ type PostHogError struct {
 
 func NewPostHogError(message string, error error) *PostHogError {
 	return &PostHogError{
-		Code:    constants.PostHogError,
+		Code:    enums.PostHogError,
 		Error:   error,
 		Message: message,
 		Name:    "PostHogError",

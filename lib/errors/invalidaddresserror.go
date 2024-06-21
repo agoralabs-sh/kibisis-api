@@ -2,7 +2,7 @@ package errors
 
 import (
 	"fmt"
-	"lib/constants"
+	"lib/enums"
 )
 
 type InvalidAddressError struct {
@@ -15,7 +15,7 @@ type InvalidAddressError struct {
 func NewInvalidAddressError(address string) *InvalidAddressError {
 	return &InvalidAddressError{
 		Address: address,
-		Code:    constants.InvalidAddressError,
+		Code:    enums.InvalidAddressError,
 		Message: fmt.Sprintf("address \"%s\" is not a valid address", address),
 		Name:    "InvalidAddressError",
 	}

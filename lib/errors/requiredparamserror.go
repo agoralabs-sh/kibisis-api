@@ -2,7 +2,7 @@ package errors
 
 import (
 	"fmt"
-	"lib/constants"
+	"lib/enums"
 )
 
 type RequiredParamsError struct {
@@ -14,7 +14,7 @@ type RequiredParamsError struct {
 
 func NewRequiredParamsError(params []string) *RequiredParamsError {
 	return &RequiredParamsError{
-		Code:    constants.RequiredParamsError,
+		Code:    enums.RequiredParamsError,
 		Message: fmt.Sprintf("the params \"%s\" are required", params),
 		Name:    "RequiredParamsError",
 		Params:  params,

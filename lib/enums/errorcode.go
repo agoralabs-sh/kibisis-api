@@ -1,4 +1,4 @@
-package constants
+package enums
 
 const (
 	// general
@@ -6,6 +6,7 @@ const (
 	// validation errors
 	RequiredParamsError int = 2000
 	InvalidAddressError int = 2001
+	ValidationError     int = 2002
 	// integration errors
 	PostHogError int = 4000
 )

@@ -1,6 +1,8 @@
 package errors
 
-import "lib/constants"
+import (
+	"lib/enums"
+)
 
 type UnknownError struct {
 	Code    int    `json:"code"`
@@ -11,7 +13,7 @@ type UnknownError struct {
 
 func NewUnknownError(message string, error error) *UnknownError {
 	return &UnknownError{
-		Code:    constants.UnknownError,
+		Code:    enums.UnknownError,
 		Error:   error,
 		Message: message,
 		Name:    "UnknownError",
