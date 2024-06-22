@@ -2,22 +2,20 @@ package main
 
 import (
 	"fmt"
-	"github.com/kamva/mgm/v3"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"go.mongodb.org/mongo-driver/mongo/options"
 	"lib/constants"
 	"lib/utils"
 	"os"
+	"relayer/internal/database"
 	_routes "relayer/internal/routes"
 )
 
 func main() {
 	logger := utils.NewLogger()
 
-	// connection
-	connectionOptions := options.Client().ApplyURI(fmt.Sprintf("%s%s:%s@%s:%s", os.Getenv("MONGODB_PROTOCOL"), os.Getenv("MONGODB_USERNAME"), os.Getenv("MONGODB_PASSWORD"), os.Getenv("MONGODB_HOST"), os.Getenv("MONGODB_PORT")))
-	if err := mgm.SetDefaultConfig(nil, os.Getenv("MONGODB_NAME"), connectionOptions); err != nil {
+	// setup database
+	if err := database.InitDatabase(); err != nil {
 		logger.Fatal(err)
 	}
 

@@ -2,6 +2,7 @@ package routes
 
 import (
 	"github.com/google/uuid"
+	"github.com/kamva/mgm/v3"
 	"github.com/labstack/echo/v4"
 	"lib/enums"
 	"lib/errors"
@@ -47,6 +48,15 @@ func NewPairingCreateRoute(logger *utils.Logger) echo.HandlerFunc {
 			Status: _enums.NotConnected,
 			Type:   _enums.ClientType,
 		}, nil)
+
+		// save to the database
+		if err := mgm.Coll(pairing).Create(pairing); err != nil {
+			unknownError = errors.NewUnknownError("failed to save pairing", err)
+
+			logger.Error(unknownError)
+
+			return c.JSON(http.StatusInternalServerError, unknownError)
+		}
 
 		return c.JSON(http.StatusCreated, pairing)
 	}

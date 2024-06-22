@@ -8,6 +8,7 @@ import (
 type Pairing struct {
 	models.DefaultModel `bson:",inline"`
 	Peers               []interface{} `json:"peers" bson:"peers"`
+	PeerCount           int           `json:"-" bson:"peer_count"`
 }
 
 func NewPairing(client *_types.ClientPeer, provider *_types.ProviderPeer) *Pairing {
@@ -22,6 +23,7 @@ func NewPairing(client *_types.ClientPeer, provider *_types.ProviderPeer) *Pairi
 	}
 
 	return &Pairing{
-		Peers: peers,
+		Peers:     peers,
+		PeerCount: len(peers),
 	}
 }
