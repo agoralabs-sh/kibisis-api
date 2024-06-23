@@ -1,25 +1,26 @@
 package models
 
 import (
+	"github.com/fatih/structs"
 	"lib/models"
 	_types "relayer/internal/types"
 )
 
 type Pairing struct {
 	models.DefaultModel `bson:",inline"`
-	Peers               []interface{} `json:"peers" bson:"peers"`
-	PeerCount           int           `json:"-" bson:"peer_count"`
+	Peers               []map[string]interface{} `json:"peers" bson:"peers"`
+	PeerCount           int                      `json:"-" bson:"peer_count"`
 }
 
 func NewPairing(client *_types.ClientPeer, provider *_types.ProviderPeer) *Pairing {
-	peers := make([]interface{}, 0)
+	peers := make([]map[string]interface{}, 0)
 
 	if client != nil {
-		peers = append(peers, client)
+		peers = append(peers, structs.Map(client))
 	}
 
 	if provider != nil {
-		peers = append(peers, provider)
+		peers = append(peers, structs.Map(provider))
 	}
 
 	return &Pairing{

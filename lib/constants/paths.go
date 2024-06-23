@@ -1,7 +1,9 @@
 package constants
 
 const (
-	CreatePath  string = "/create"
-	PairingPath string = "/pairing"
-	RelayPath   string = "/relay"
+	ClientPath   string = "/client"
+	CreatePath   string = "/create"
+	PairingPath  string = "/pairing"
+	ProviderPath string = "/provider"
+	RelayPath    string = "/relay"
 )

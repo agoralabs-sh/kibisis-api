@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/kamva/mgm/v3"
 	"go.mongodb.org/mongo-driver/bson"
+	"lib/constants"
 	"lib/utils"
 	_enums "relayer/internal/enums"
 	"relayer/internal/models"
@@ -30,7 +31,7 @@ func createPairingIndexes() error {
 	}
 
 	// create indexes
-	if _, err = mgm.Coll(&models.Pairing{}).Indexes().CreateOne(ctx, utils.CreateTTLIndex(pairingTTLIndexName, "updated_at", int32(30), bson.D{
+	if _, err = mgm.Coll(&models.Pairing{}).Indexes().CreateOne(ctx, utils.CreateTTLIndex(pairingTTLIndexName, "updated_at", int32(constants.TwentyFourHoursInSeconds), bson.D{
 		{
 			"$or",
 			bson.A{

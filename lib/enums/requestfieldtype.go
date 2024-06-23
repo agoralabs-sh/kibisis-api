@@ -2,6 +2,6 @@ package enums
 
 const (
 	BodyFieldType  string = "body"
-	ParamFieldType        = "param"
+	PathFieldType         = "path"
 	QueryFieldType        = "param"
 )

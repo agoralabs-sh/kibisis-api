@@ -9,4 +9,6 @@ const (
 	ValidationError     int = 2002
 	// integration errors
 	PostHogError int = 4000
+	// pairing
+	PairingNotFoundError int = 5000
 )

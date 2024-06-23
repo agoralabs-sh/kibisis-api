@@ -25,8 +25,10 @@ func main() {
 	// middlewares
 	e.Use(middleware.Logger())
 
-	// relay/pairing/create
-	e.POST(fmt.Sprint(constants.RelayPath, constants.PairingPath, constants.CreatePath), _routes.NewPairingCreateRoute(logger))
+	// POST relay/pairing/client
+	e.POST(fmt.Sprint(constants.RelayPath, constants.PairingPath, constants.ClientPath), _routes.NewPairingCreateRoute(logger))
+	// PATCH relay/pairing/:id/provider
+	e.PATCH(fmt.Sprintf("%s%s/:id%s", constants.RelayPath, constants.PairingPath, constants.ProviderPath), _routes.NewPairingAddRoute(logger))
 
 	// start server
 	if err := e.Start(fmt.Sprintf(":%s", os.Getenv("RELAYER_PORT"))); err != nil {
