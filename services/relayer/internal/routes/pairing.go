@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"fmt"
 	"github.com/fatih/structs"
 	"github.com/google/uuid"
 	"github.com/kamva/mgm/v3"
@@ -33,7 +34,7 @@ func NewPairingAddRoute(logger *utils.Logger) echo.HandlerFunc {
 		if validationErrors := requestBody.Validate(); validationErrors != nil {
 			validationError = errors.NewValidationError(enums.BodyFieldType, validationErrors)
 
-			logger.Error(validationError)
+			logger.Debug(validationError)
 
 			return c.JSON(http.StatusBadRequest, validationErrors)
 		}
@@ -48,6 +49,12 @@ func NewPairingAddRoute(logger *utils.Logger) echo.HandlerFunc {
 			return c.JSON(http.StatusNotFound, errors.NewPairingNotFoundError(pairingId))
 		}
 
+		if providerPeer := pairing.GetProviderPeer(); providerPeer != nil {
+			logger.Debug(fmt.Sprintf("peer \"%s\" already added to pairing \"%s\"", providerPeer.Info.Name, pairingId))
+
+			return c.JSON(http.StatusForbidden, fmt.Sprintf("provider peer already added to pairing \"%s\"", pairingId))
+		}
+
 		// add the provider
 		pairing.Peers = append(pairing.Peers, structs.Map(&_types.ProviderPeer{
 			Info: &_types.ProviderInfo{
@@ -60,7 +67,7 @@ func NewPairingAddRoute(logger *utils.Logger) echo.HandlerFunc {
 
 		// save to the database
 		if err := mgm.Coll(pairing).Update(pairing); err != nil {
-			unknownError = errors.NewUnknownError("failed to save pairing", err)
+			unknownError = errors.NewUnknownError(fmt.Sprintf("failed to save to pairing \"%s\"", pairingId), err)
 
 			logger.Error(unknownError)
 
