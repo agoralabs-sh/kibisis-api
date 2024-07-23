@@ -3,7 +3,7 @@ scripts_dir := ./scripts
 all: setup swagger deploy
 
 deploy:
-	doppler run -- doctl serverless deploy "${PWD}"
+	doppler run -- doctl serverless deploy "${PWD}" --exclude=swagger
 
 list:
 	doctl serverless functions list
