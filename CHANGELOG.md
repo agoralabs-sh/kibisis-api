@@ -1,3 +1,10 @@
+# [1.3.0-beta.1](https://github.com/agoralabs-sh/kibisis-api/compare/v1.2.0...v1.3.0-beta.1) (2024-07-23)
+
+
+### Features
+
+* add total number of daily quests completed ([#13](https://github.com/agoralabs-sh/kibisis-api/issues/13)) ([07b8bc9](https://github.com/agoralabs-sh/kibisis-api/commit/07b8bc970ad1cd71eb42b83dbf8047974006b87f))
+
 # [1.2.0](https://github.com/agoralabs-sh/kibisis-api/compare/v1.1.0...v1.2.0) (2024-06-12)
 
 
