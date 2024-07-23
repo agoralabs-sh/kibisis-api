@@ -81,6 +81,21 @@ func Main(request _types.Request) *_types.Response {
 
 	logger.Debug(fmt.Sprintf("received the event references %s", eventReferences))
 
+	logger.Debug(fmt.Sprintf("getting total daily events from posthog for account \"%s\"", request.Account))
+
+	totalDailyEvents, err := _queries.FetchTotalDailyEvents(request.Account, logger)
+	if err != nil {
+		return &_types.Response{
+			Body: _types.ResponseBody{
+				Error: errors.NewPostHogError("failed to fetch total daily events from posthog", err),
+			},
+			Headers:    headers,
+			StatusCode: http.StatusInternalServerError,
+		}
+	}
+
+	logger.Debug(fmt.Sprintf("received total daily events from posthog for account \"%s\"", request.Account))
+
 	logger.Debug(fmt.Sprintf("getting daily events from posthog for account \"%s\"", request.Account))
 
 	dailyEvents, err := _queries.FetchDailyEvents(request.Account, logger)
@@ -96,21 +111,32 @@ func Main(request _types.Request) *_types.Response {
 
 	logger.Debug(fmt.Sprintf("received daily events from posthog for account \"%s\"", request.Account))
 
-	// map the daily quests from teh events, defaulting to zero for quests that are not in the daily events from posthog
+	// map the daily quests from the events, defaulting to zero for quests that are not in the daily events from posthog
 	for _, eventReference := range eventReferences {
-		completed := 0
-		index := slices.IndexFunc(dailyEvents, func(event _types.DailyEvent) bool {
+		completed := false
+		total := 0
+		index := slices.IndexFunc(totalDailyEvents, func(event _types.TotalDailyEvent) bool {
 			return event.Name == eventReference
 		})
 
-		// if the event reference is in the daily events, get the amount
+		// if the event reference is in the total daily events, get the total
 		if index > -1 {
-			completed = dailyEvents[index].Amount
+			total = totalDailyEvents[index].Total
+		}
+
+		index = slices.IndexFunc(dailyEvents, func(event _types.DailyEvent) bool {
+			return event.Name == eventReference
+		})
+
+		// if the event reference is in the daily events, get the completed
+		if index > -1 {
+			completed = dailyEvents[index].Completed
 		}
 
 		dailyQuests = append(dailyQuests, _types.DailyQuest{
-			Id:        eventReference,
 			Completed: completed,
+			Id:        eventReference,
+			Total:     total,
 		})
 	}
 

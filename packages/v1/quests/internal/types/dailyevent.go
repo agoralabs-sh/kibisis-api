@@ -1,6 +1,6 @@
 package types
 
 type DailyEvent struct {
-	Amount int
-	Name   string
+	Completed bool
+	Name      string
 }
