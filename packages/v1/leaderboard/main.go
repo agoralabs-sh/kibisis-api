@@ -2,14 +2,14 @@ package main
 
 import (
 	"fmt"
+	_constants "leaderboard/internal/constants"
+	_queries "leaderboard/internal/queries"
+	_types "leaderboard/internal/types"
 	"lib/constants"
 	"lib/errors"
 	"lib/utils"
 	"math"
 	"net/http"
-	_constants "quests/internal/constants"
-	_queries "quests/internal/queries"
-	_types "quests/internal/types"
 	"strconv"
 )
 

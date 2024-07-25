@@ -2,10 +2,10 @@ package queries
 
 import (
 	"fmt"
+	_constants "leaderboard/internal/constants"
+	_types "leaderboard/internal/types"
 	"lib/types"
 	"lib/utils"
-	_constants "quests/internal/constants"
-	_types "quests/internal/types"
 )
 
 // FetchLeaderboardResults Fetches a page of leaderboard results. The page is zero-indexed.
