@@ -1,17 +1,16 @@
-package queries
+package utils
 
 import (
 	"bytes"
 	"fmt"
 	"lib/constants"
-	"lib/utils"
 	"net/http"
 	"os"
 	"strings"
 	"time"
 )
 
-func PostHogQuery(query string, output any) error {
+func SendPostHogQuery(query string, output any) error {
 	path := strings.Replace(constants.QueryPath, ":project_id", os.Getenv("POSTHOG_PROJECT_ID"), -1)
 	request, err := http.NewRequest(http.MethodPost, fmt.Sprintf("%s%s", os.Getenv("POSTHOG_API_URL"), path), bytes.NewReader([]byte(query)))
 	if err != nil {
@@ -31,7 +30,7 @@ func PostHogQuery(query string, output any) error {
 		return err
 	}
 
-	err = utils.ParseResponseBody(response.Body, &output)
+	err = ParseResponseBody(response.Body, &output)
 	if err != nil {
 		return err
 	}

@@ -7,7 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
-	internaltypes "quests/internal/types"
+	_types "quests/internal/types"
 	"testing"
 )
 
@@ -27,7 +27,7 @@ func TestMain(m *testing.M) {
 
 func TestIncorrectHTTPMethod(t *testing.T) {
 	// arrange
-	request := internaltypes.Request{
+	request := _types.Request{
 		Account: account,
 		Http: types.Http{
 			Method: http.MethodPost,
@@ -45,7 +45,7 @@ func TestIncorrectHTTPMethod(t *testing.T) {
 
 func TestInvalidAccount(t *testing.T) {
 	// arrange
-	request := internaltypes.Request{
+	request := _types.Request{
 		Account: "not a valid account",
 		Http: types.Http{
 			Method: http.MethodGet,

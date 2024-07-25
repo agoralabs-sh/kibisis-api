@@ -28,6 +28,7 @@ func Main() *_types.Response {
 		},
 		Headers: _types.ResponseHeaders{
 			CacheControl: fmt.Sprintf("public, max-age=%d", constants.TwentyFourHoursInSeconds),
+			ContentType:  "application/json",
 		},
 		StatusCode: http.StatusOK,
 	}
