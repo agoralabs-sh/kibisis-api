@@ -1,15 +1,15 @@
 package queries
 
 import (
+	"lib/types"
 	"lib/utils"
-	_types "quests/internal/types"
 )
 
 func FetchEventReferences(logger *utils.Logger) ([]string, error) {
-	var response _types.PostHogQueryResponse
+	var response types.PostHogQueryResponse
 	var result []string
 
-	err := PostHogQuery(`{"query":{"kind":"HogQLQuery","query":"select distinct events.event from events"}}`, &response)
+	err := utils.SendPostHogQuery(`{"query":{"kind":"HogQLQuery","query":"select distinct events.event from events"}}`, &response)
 	if err != nil {
 		logger.Error(err)
 
