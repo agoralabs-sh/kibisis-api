@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/agoralabs-sh/kibisis-api/compare/v1.3.0...v1.4.0) (2024-07-25)
+
+
+### Features
+
+* add leaderboard endpoint ([#15](https://github.com/agoralabs-sh/kibisis-api/issues/15)) ([decc31e](https://github.com/agoralabs-sh/kibisis-api/commit/decc31e3738f1ef8e881b6ce5e427158aca322ec))
+
 # [1.4.0-beta.1](https://github.com/agoralabs-sh/kibisis-api/compare/v1.3.0...v1.4.0-beta.1) (2024-07-25)
 
 
